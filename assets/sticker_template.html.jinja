@@ -1,0 +1,127 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        @font-face {
+            font-face-name: "TG-Roboto";
+            font-family: sans-serif;
+            src: url("data:font/ttf;charset=utf-8;base64,{{ font_data_b64 }}");
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "TG-Roboto", sans-serif;
+            font-weight: lighter;
+        }
+
+        body {
+            width: 512px;
+            display: flex;
+            flex-direction: row;
+            position: absolute;
+        }
+
+        .avatar-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative; /* needs to be relative for correct positioning of message bubble tail */
+            padding-right: 10px;
+        }
+
+        .avatar-container {
+            position: relative; /* needs to be relative for avatar img to obey to overflow:hidden */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            box-sizing: border-box;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: {{ user_color_real }};
+            border: {{ outline_width }} solid{{ outline_color }};
+        }
+
+        .default-avatar-text {
+            font-size: 25px;
+            color: white;
+        }
+
+        .message-bubble-tail {
+            box-sizing: border-box;
+            border-bottom: {{ outline_width }} solid{{ outline_color }};
+            position: absolute;
+            bottom: 0;
+            right: calc(-10px - {{ outline_width }});
+            width: 25px;
+            height: 15px;
+            overflow: hidden;
+        }
+
+        .message-bubble-tail-inner {
+            box-sizing: border-box;
+            border: {{ outline_width }} solid{{ outline_color }};
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            height: 30px;
+            width: 30px;
+            box-shadow: 0 0 0 15px{{ background_color }};
+            border-radius: 50%;
+        }
+
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .message-bubble {
+            box-sizing: border-box;
+            border: {{ outline_width }} solid{{ outline_color }};
+            color: {{ text_color }};
+            background-color: {{ background_color }};
+            border-radius: 10px;
+            font-size: {{ font_size }};
+            padding: 15px 15px 15px 20px;
+            width: 100%;
+
+            .user-name {
+                color: {{ user_color_real }};
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+    <title>MessageSticker</title>
+</head>
+<body>
+<div class="avatar-column">
+    <div class="avatar-container">
+        <span class="default-avatar-text">{{ initials }}</span>
+        {% if avatar_data_b64|count != 0 %}
+            <img style="position: absolute;" src="data:{{ avatar_mime }};encoding=utf-8;base64,{{ avatar_data_b64 }}"
+                 alt="avatar" width="50" height="50"/>
+        {% endif %}
+    </div>
+    <div class="message-bubble-tail">
+        <div class="message-bubble-tail-inner"></div>
+    </div>
+</div>
+<div class="messages">
+    {%- for message in messages -%}
+        <div class="message-bubble">
+            {%- if loop.first -%}
+                <span class="user-name">{{ user_name }}</span>
+                <br>
+            {%- endif -%}
+            <span>
+        {{ message }}
+        </span>
+        </div>
+    {%- endfor -%}
+</div>
+</body>
+</html>

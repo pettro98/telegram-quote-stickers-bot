@@ -1,0 +1,4 @@
+Pyrogram~=2.0.106
+pillow~=10.4.0
+pyppeteer~=2.0.0
+Jinja2~=3.1.4
