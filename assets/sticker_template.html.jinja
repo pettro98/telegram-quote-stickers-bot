@@ -48,7 +48,11 @@
             font-size: 25px;
             color: white;
         }
-
+        /* in telegram desktop current style for message bubbles is
+            corner radius of 16px
+            and bubble tail is a monochromatic image with round part radius approx. 8px
+            Gap between messages is approx. 8px
+         */
         .message-bubble-tail {
             box-sizing: border-box;
             border-bottom: {{ outline_width }} solid{{ outline_color }};
