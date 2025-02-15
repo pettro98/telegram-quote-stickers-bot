@@ -1,15 +1,11 @@
 from PIL import Image, ImageDraw, ImageFont
-import os
 
-import text_fit
-
-def get_project_abspath(relative: str):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", relative))
-
+from text import wrap, fonts
+import util
 
 def main():
     img = Image.new("RGBA", (300, 400), color=(255, 255, 255, 255))
-    font = ImageFont.truetype(get_project_abspath("assets/Roboto-Medium.ttf"), 25)
+    font = fonts.OPENSANS_FONT.font_variant(size=25)
 
     draw = ImageDraw.Draw(img)
 
@@ -18,7 +14,7 @@ def main():
            "Etiam aliquam, leo eget fringilla tristique, libero lorem. "\
            "FSDKFDJFKWIEUFHJDLKSFJSKDLFKSJDKFLSKDNSDJKNLVCKSDJVSKJDLVKSJBDKV"
 
-    wrapped_text, pix_length = text_fit.text_width_fit(text, font, 300)
+    wrapped_text, pix_length = wrap.text_wrap(text, font, 300)
 
     print(wrapped_text)
     print(f"{pix_length} pixels")

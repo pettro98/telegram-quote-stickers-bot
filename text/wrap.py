@@ -1,6 +1,3 @@
-from typing import Tuple
-import re
-
 from PIL.ImageFont import FreeTypeFont
 import uniseg.linebreak
 import uniseg.graphemecluster
@@ -48,7 +45,7 @@ def _add_word_to_line(line: str, word: str, font: FreeTypeFont, max_width: float
     return result_lines, max_length
 
 
-def _line_width_fit(line: str, font: FreeTypeFont, max_width: float) -> Tuple[list[str], int]:
+def _line_width_wrap(line: str, font: FreeTypeFont, max_width: float) -> tuple[list[str], int]:
     result_lines = []
     max_length = 0
     current_line = ""
@@ -65,7 +62,7 @@ def _line_width_fit(line: str, font: FreeTypeFont, max_width: float) -> Tuple[li
     return result_lines, max_length
 
 
-def text_width_fit(text: str, font: FreeTypeFont, max_width: int) -> Tuple[list[str], int]:
+def text_wrap(text: str, font: FreeTypeFont, max_width: int) -> tuple[list[str], int]:
     result_lines = []
     max_length = 0
 
@@ -74,7 +71,7 @@ def text_width_fit(text: str, font: FreeTypeFont, max_width: int) -> Tuple[list[
             result_lines.append("")
             continue
 
-        fit_lines, fit_line_width = _line_width_fit(line, font, max_width)
+        fit_lines, fit_line_width = _line_width_wrap(line, font, max_width)
         result_lines.extend(fit_lines)
         max_length = max(max_length, fit_line_width)
 

@@ -1,19 +1,21 @@
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+import io
+import base64
 import os
+
+
+# for some reason the default hardcoded Chromium version in puppeteer is unavailable to download for windows
+# as of 15 feb 2025 the  issue is still there (see https://github.com/pyppeteer/pyppeteer/issues/483)
+# variable needs to be set before importing pyppeteer
+os.environ["PYPPETEER_CHROMIUM_REVISION"] = "1181217"
+
+
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 import pyppeteer
 import jinja2
-import base64
-import io
 
+import util
+from text import fonts
 
-def get_project_abspath(relative: str):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", relative))
-
-
-_ROBOTO_REGULAR_PATH = get_project_abspath("assets/Roboto-Regular.ttf")
-_ROBOTO_ITALIC_PATH = get_project_abspath("assets/Roboto-Italic.ttf")
-_ROBOTO_MEDIUM_REGULAR_PATH = get_project_abspath("assets/Roboto-Bold.ttf")
-_ROBOTO_MEDIUM_ITALIC_PATH = get_project_abspath("assets/Roboto-BoldItalic.ttf")
 
 
 class StickerBuilder:
@@ -67,18 +69,16 @@ class StickerBuilder:
             avatar_image = Image.new("RGBA", (50, 50))
             draw_ctx = ImageDraw.Draw(avatar_image)
             draw_ctx.ellipse((0, 0, 49, 49), self.accent)
-            avatar_font = ImageFont.truetype(_ROBOTO_REGULAR_PATH, 25)
+            avatar_font = fonts.OPENSANS_FONT.font_variant(size=25)
             draw_ctx.text((25, 25), self.initials, font=avatar_font, anchor="mm", fill=(255, 255, 255))
             self.avatar = avatar_image
 
         avatar_io = io.BytesIO()
         self.avatar.save(avatar_io, "PNG")
 
-        jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('assets'), undefined=jinja2.StrictUndefined)
+        jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(util.get_project_abspath("assets")), undefined=jinja2.StrictUndefined)
 
-        font_data_b64 = None
-        with open(_ROBOTO_REGULAR_PATH, "rb") as font:
-            font_data_b64 = base64.b64encode(font.read()).decode("ascii")
+        font_data_b64 = fonts.OPENSANS_FONT_B64
 
         template_params = dict(
             font_data_b64=font_data_b64,

@@ -1,19 +1,15 @@
-import asyncio
 import io
 import asyncio
 
-from PIL import Image, ImageDraw, ImageFont, ImageOps
-from bot_utils import get_project_abspath
+from PIL import Image, ImageDraw, ImageOps
+from util import get_project_abspath
 import jinja2
-
-from draw_sticker import render_sticker, PrivateDrawingSettings
-from user_settings import UserDrawingSettings
 
 ROBOTO_AVATAR_PATH = get_project_abspath("assets/Roboto-Bold.ttf")
 
 
 async def main():
-    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('assets'), undefined=jinja2.StrictUndefined)
+    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('../assets'), undefined=jinja2.StrictUndefined)
 
     stub_avatar = Image.new(mode="RGB", size=(50, 50), color=(255, 255, 255))
     draw_context = ImageDraw.Draw(stub_avatar)
@@ -33,7 +29,7 @@ async def main():
     # draw_ctx.ellipse((0, 0, 49, 49), (0xff, 0x88, 0x00))
     # user_initials = "".join(map(lambda s: s[:1], ["John", "Doe"])).upper()
     # avatar_font = ImageFont.truetype(ROBOTO_AVATAR_PATH, 25)
-    # draw_ctx.text((25, 25), user_initials, font=avatar_font, anchor="mm")
+    # draw_ctx.text((25, 25), user_initials, fonts.py=avatar_font, anchor="mm")
     # avatar_image.show()
 
     ## render avatar from image

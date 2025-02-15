@@ -1,16 +1,11 @@
-import time
-
-import pyrogram as pg
-import pyrogram.types as pg_t
 import user_db
-from bot_utils import get_project_abspath
+from util import get_project_abspath
 import pyppeteer
 import jinja2
 import base64
 import io
 from PIL import Image, ImageFont, ImageOps, ImageDraw
 from dataclasses import dataclass, asdict
-from bot_utils import timed_zone
 
 _ROBOTO_REGULAR_PATH = get_project_abspath("assets/Roboto-Regular.ttf")
 _ROBOTO_ITALIC_PATH = get_project_abspath("assets/Roboto-Italic.ttf")

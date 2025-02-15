@@ -1,7 +1,10 @@
-from sticker_builder import StickerBuilder, get_project_abspath
-from PIL import Image
 import io
 import asyncio
+
+from PIL import Image
+
+from sticker_builder import StickerBuilder
+from util import get_project_abspath
 
 MESSAGES = [
     "Lorem ipsum",

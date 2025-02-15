@@ -1,19 +1,12 @@
-import base64
-
 import pyppeteer
 import pyrogram as pg
 import pyrogram.types as pg_t
 import pyrogram.filters as pg_flt
-import PIL
-import sqlite3
 import asyncio
-import os
-import sys
 import io
 import argparse
 import jinja2
 
-from bot_utils import timed_zone
 from user_db import UserDB, MemoryUserDBImpl, UserDrawingSettings
 from draw_sticker import render_sticker, PrivateDrawingSettings
 from PIL import Image
