@@ -15,6 +15,7 @@ OPENSANS_FONT_B64 = base64.b64encode(pathlib.Path(_OPENSANS_FONT_PATH).read_byte
 OPENSANS_ITALIC_FONT_B64 = base64.b64encode(pathlib.Path(_OPENSANS_ITALIC_FONT_PATH).read_bytes()).decode("ascii")
 
 
+# telegram-desktop uses OpenSans as default font (as of 15 feb 2025) so Roboto is not used now
 _ROBOTO_FONT_PATH = util.get_project_abspath("assets/Roboto-VariableFont_wdth,wght.ttf")
 _ROBOTO_ITALIC_FONT_PATH = util.get_project_abspath("assets/Roboto-Italic-VariableFont_wdth,wght.ttf")
 
